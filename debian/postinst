@@ -1,14 +1,15 @@
 #!/bin/sh
 set -e
 
-mkdir /etc/virtstat/
+mkdir /etc/VirtStat/
 
-touch /etc/virtstat/servers
-touch /etc/virtstat/mail
+touch /etc/VirtStat/servers
+touch /etc/VirtStat/mail
 
 chown -R root:root /etc/virtstat
 
 mv /sbin/VirtStat.sh /sbin/VirtStat
 chmod 600 /sbin/VirtStat
+chmod +x /sbin/VirtStat
 
 #DEBHELPER#
