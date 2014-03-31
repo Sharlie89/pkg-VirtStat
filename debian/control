@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: Carlos Alvarez Barba <sharlie89@gmail.com>
 Build-Depends: debhelper (>= 8.0.0)
 Standards-Version: 3.9.3
-Homepage: <https://github.com/Sharlie89/pkg-VirtStat.git>
+Homepage: https://github.com/Sharlie89/pkg-VirtStat.git
 #Vcs-Git: git://git.debian.org/collab-maint/pkg-virtstat.git
 #Vcs-Browser: http://git.debian.org/?p=collab-maint/pkg-virtstat.git;a=summary
 
@@ -15,8 +15,8 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
 	 gawk,
 Description: Shell script tool for KVM
  VirtStat is a shell script tool for KVM.
-This tool allows you to extrac RAM and CPU usage
-by guests. Also is able to copy directories/files 
-to other KVM hosts or execute remote commands on 
-hosts.
+ This tool allows you to extrac RAM and CPU usage
+ by guests. Also is able to copy directories/files 
+ to other KVM hosts or execute remote commands on 
+ hosts.
 
