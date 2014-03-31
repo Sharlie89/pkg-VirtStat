@@ -13,6 +13,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
 	 smem,
 	 gawk,
+	 libvirt-bin,
 Description: Shell script tool for KVM
  VirtStat is a shell script tool for KVM.
  This tool allows you to extrac RAM and CPU usage
