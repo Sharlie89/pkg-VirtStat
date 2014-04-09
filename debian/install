@@ -1,1 +1,3 @@
-src/*.sh /sbin/
+src/VirtStat /sbin/
+src/memMV /sbin/
+src/memlist /sbin/
