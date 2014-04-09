@@ -19,20 +19,6 @@ host=`hostname`
 
 ###### DECLARATION OF FUNCTIONS ######
 
-#function memMV(){
-#        virsh list |grep -v Id |grep -v "\--" |awk -F" " '{print $2}'| sed '$d' >> $mvr
-#        while read line
-#                do
-#                  memMVm=`cat /etc/libvirt/qemu/$line.xml |grep  memory | awk -F "<memory'*'>" '{print $1}' |awk -F"</memory>" '{print $1}' |awk -F">" '{print $2}'`
-#                  memMVmb=$(($memMVm / 1024))
-#                  memMVt=$(($memMVt + $memMVmb))
-#                  echo "$line:$memMVmb" >> $mvstatustemp
-#                done < $mvr
-#        echo "TOTAL ASSIGNED: $memMVt MB" >> $mvstatustemp
-#        rm -f $mvr
-#}
-
-
 function Virtstat(){
 echo "============================================================================" > $mvstatus
 echo "============== ESTADO DE LAS MAQUINAS VIRTUALES $fecha =================" >> $mvstatus
@@ -45,7 +31,6 @@ touch $mvstatustemp
 echo " ---======= $host =======---        " >> $mvstatus
 virsh list |grep -v Id |grep -v "\----------------------------------------------------"| awk -F" " '{print $2}'| sed '$d' >> $mvstatustemp2
 virsh list |grep -v Id |grep -v "\----------------------------------------------------"| sed '$d' >> $mvstatustemp3
-#alias memVM='/sbin/memMV'
 memMV
 echo -e " Id    Name                           State     Memory \t\t %Use \t\t%CPU" >> $mvstatus
 echo "-----------------------------------------------------------------------------------------" >> $mvstatus
@@ -78,7 +63,7 @@ for line in $(cat $hostlist);
                 echo "---======= $line =======---          " >> $mvstatus
 		ssh $line "virsh list |grep -v Id "|grep -v "\---"| awk -F" " '{print $2}'| sed '$d' >> $mvstatustemp2
 		ssh $line "virsh list |grep -v Id "|grep -v "\---"| sed '$d' >> $mvstatustemp3
-		ssh $line "sh /sbin/memMV" >> $mvstatustemp3
+		ssh $line "memMV" >> $mvstatustemp3
 		echo -e " Id    Name                           State     Memory \t\t %Use \t\t%CPU" >> $mvstatus
 		echo "-----------------------------------------------------------------------------------------" >> $mvstatus
 		for line2 in $(cat $mvstatustemp2);
@@ -91,7 +76,7 @@ for line in $(cat $hostlist);
 		                percent=`cat $mvstatuspercent`
 				cpup=`ssh $line ps aux |grep "\-name $line2" |grep -v "grep"|tail -n1`
 				cpup=`echo $cpup |awk -F" " '{print $3}'`
-	        	       	echo -e "$guestemp  \t $memtemp MB  \t $percent \t\t$cpup%" >> $mvstatus
+	        	       	echo -e "$guestemp  \t $memtemp MB  \t $percent\t\t$cpup%" >> $mvstatus
         		done
 		echo " " >> $mvstatus
 		ssh $line "cat $mvstatustemp" |grep "TOTAL ASSIGNED:" >> $mvstatus
@@ -101,9 +86,9 @@ for line in $(cat $hostlist);
 		echo "TOTAL % IN USE OF ASSIGNED MEMORY: $totp " >> $mvstatus
 		echo " " >> $mvstatus
                 echo " ------ MEMORIA $line ------" >> $mvstatus
-                ssh $line "/opt/scripts/VirtStat/listar.sh" >> $mvstatus
+                ssh $line "memlist" >> $mvstatus
                 echo " " >> $mvstatus
-		rm -f $mvstatustemp $mvstatustemp2 $mvstatustemp3 $mvstatuspercent $mvstatuspercentr
+		rm -f $mvstatustemp $mvstatustemp2 $mvstatustemp3 $mvstatuspercent $mvstatuspercentr $totptemp
 	 done
 }
 
@@ -132,13 +117,13 @@ case $1 in
 			for copyhost in $(cat $hostlist)
 				do
 					scp -pr $2 $copyhost:$3
-					echo "SUCCESS COPY ON $line"
+					echo "SUCCESS COPY ON $copyhost"
 				done
 		else
 			for copyhost in $(cat $hostlist)
 				do
 					scp  $2 $copyhost:$3
-					echo "SUCCESS COPY ON $line"
+					echo "SUCCESS COPY ON $copyhost"
 				done
 		fi ;;
 
