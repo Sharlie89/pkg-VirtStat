@@ -6,7 +6,7 @@ mkdir /etc/VirtStat/
 touch /etc/VirtStat/servers
 touch /etc/VirtStat/mail
 
-chown -R root:root /etc/virtstat
+chown -R root:root /etc/VirtStat
 
 chmod 600 /sbin/VirtStat
 chmod +x /sbin/VirtStat
