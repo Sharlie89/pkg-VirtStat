@@ -8,8 +8,13 @@ touch /etc/VirtStat/mail
 
 chown -R root:root /etc/virtstat
 
-mv /sbin/VirtStat.sh /sbin/VirtStat
 chmod 600 /sbin/VirtStat
 chmod +x /sbin/VirtStat
+chmod 600 /sbin/memMV
+chmod +x /sbin/memMV
+chmod 600 /sbin/memlist
+chmod +x /sbin/memlist
 
 #DEBHELPER#
+
+exit 0
